@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block title %}Getbelge - Ana Sayfa{% endblock %}
+
+{% block page_content %}
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-size: 36px; color: #1a73e8; margin-bottom: 15px;">Getbelge</h1>
+        <p style="font-size: 18px; color: #555; max-width: 800px; margin: 0 auto;">Yapay zeka destekli CV ve PDF belge oluşturma platformuna hoş geldiniz. Profesyonel CV'ler ve belgeler oluşturmak için hemen başlayın.</p>
+    </div>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; margin: 40px 0;">
+        <!-- CV Oluşturma Kartı -->
+        <div style="flex: 1; min-width: 300px; background-color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;">
+            <div style="background-color: #4CAF50; padding: 20px; text-align: center;">
+                <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
+                    <span style="font-size: 40px;">📄</span>
+                </div>
+                <h2 style="color: white; margin: 0;">CV Oluşturucu</h2>
+            </div>
+            <div style="padding: 25px;">
+                <p style="color: #666; margin-bottom: 20px;">OpenAI'nin güçlü yapay zeka teknolojisiyle saniyeler içinde profesyonel, ATS uyumlu CV'ler oluşturun.</p>
+                <ul style="list-style-type: none; padding: 0; margin-bottom: 25px;">
+                    <li style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #4CAF50; margin-right: 10px;">✓</span>
+                        <span>İşverenin dikkatini çeken modern CV'ler</span>
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #4CAF50; margin-right: 10px;">✓</span>
+                        <span>Otomatik format ve düzenleme</span>
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #4CAF50; margin-right: 10px;">✓</span>
+                        <span>PDF olarak indirme ve yazdırma</span>
+                    </li>
+                </ul>
+                {% if 'user_id' in session %}
+                    <a href="{{ url_for('create_resume') }}" class="btn" style="background-color: #4CAF50; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 5px; font-weight: bold;">CV Oluşturmaya Başla</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn" style="background-color: #4CAF50; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 5px; font-weight: bold;">Giriş Yap & CV Oluştur</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- PDF Belge Oluşturma Kartı -->
+        <div style="flex: 1; min-width: 300px; background-color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;">
+            <div style="background-color: #1a73e8; padding: 20px; text-align: center;">
+                <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
+                    <span style="font-size: 40px;">📝</span>
+                </div>
+                <h2 style="color: white; margin: 0;">PDF Belge Oluşturucu</h2>
+            </div>
+            <div style="padding: 25px;">
+                <p style="color: #666; margin-bottom: 20px;">Metinlerinizi otomatik olarak düzenleyin, formatlayın ve profesyonel PDF belgelere dönüştürün.</p>
+                <ul style="list-style-type: none; padding: 0; margin-bottom: 25px;">
+                    <li style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #1a73e8; margin-right: 10px;">✓</span>
+                        <span>Dilbilgisi ve yazım düzeltmeleri</span>
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #1a73e8; margin-right: 10px;">✓</span>
+                        <span>Otomatik bölümlendirme ve formatlama</span>
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <span style="color: #1a73e8; margin-right: 10px;">✓</span>
+                        <span>PDF olarak indirme ve yazdırma</span>
+                    </li>
+                </ul>
+                {% if 'user_id' in session %}
+                    <a href="{{ url_for('create_document') }}" class="btn" style="background-color: #1a73e8; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 5px; font-weight: bold;">Belge Oluşturmaya Başla</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn" style="background-color: #1a73e8; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 5px; font-weight: bold;">Giriş Yap & Belge Oluştur</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Nasıl Çalışır Bölümü -->
+    <div class="card" style="margin-top: 40px;">
+        <h2 style="color: #1a73e8; text-align: center; margin-bottom: 30px;">Nasıl Çalışır?</h2>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            <div style="flex: 1; min-width: 200px; max-width: 280px; text-align: center;">
+                <div style="width: 70px; height: 70px; background-color: #e8f0fe; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
+                    <span style="font-size: 30px;">1️⃣</span>
+                </div>
+                <h3 style="font-size: 18px; color: #333;">Bilgilerinizi Girin</h3>
+                <p style="color: #666;">CV'niz veya belgeniz için gerekli bilgileri girin.</p>
+            </div>
+            
+            <div style="flex: 1; min-width: 200px; max-width: 280px; text-align: center;">
+                <div style="width: 70px; height: 70px; background-color: #e8f0fe; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
+                    <span style="font-size: 30px;">2️⃣</span>
+                </div>
+                <h3 style="font-size: 18px; color: #333;">Yapay Zeka İşler</h3>
+                <p style="color: #666;">Yapay zeka, içeriğinizi profesyonel şekilde formatlar ve düzenler.</p>
+            </div>
+            
+            <div style="flex: 1; min-width: 200px; max-width: 280px; text-align: center;">
+                <div style="width: 70px; height: 70px; background-color: #e8f0fe; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
+                    <span style="font-size: 30px;">3️⃣</span>
+                </div>
+                <h3 style="font-size: 18px; color: #333;">Hazır PDF</h3>
+                <p style="color: #666;">Profesyonelce hazırlanmış belgenizi PDF olarak indirin veya yazdırın.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Avantajlar Bölümü -->
+    <div class="card" style="margin-top: 40px;">
+        <h2 style="color: #1a73e8; text-align: center; margin-bottom: 30px;">Neden Getbelge?</h2>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <div style="flex: 1; min-width: 300px;">
+                <div style="display: flex; margin-bottom: 20px;">
+                    <div style="margin-right: 15px; flex-shrink: 0;">
+                        <div style="width: 50px; height: 50px; background-color: #e8f0fe; border-radius: 8px; display: flex; justify-content: center; align-items: center;">
+                            <span style="color: #1a73e8; font-size: 24px;">⚡</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-top: 0; color: #333; font-size: 18px;">Zaman Tasarrufu</h3>
+                        <p style="color: #666;">Dakikalar içinde profesyonel belgeler oluşturun, saatlerinizi kazanın.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="flex: 1; min-width: 300px;">
+                <div style="display: flex; margin-bottom: 20px;">
+                    <div style="margin-right: 15px; flex-shrink: 0;">
+                        <div style="width: 50px; height: 50px; background-color: #e8f0fe; border-radius: 8px; display: flex; justify-content: center; align-items: center;">
+                            <span style="color: #1a73e8; font-size: 24px;">🔍</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-top: 0; color: #333; font-size: 18px;">Profesyonel Sonuçlar</h3>
+                        <p style="color: #666;">Yapay zeka ile her zaman profesyonel ve etkileyici belgeler elde edin.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="flex: 1; min-width: 300px;">
+                <div style="display: flex; margin-bottom: 20px;">
+                    <div style="margin-right: 15px; flex-shrink: 0;">
+                        <div style="width: 50px; height: 50px; background-color: #e8f0fe; border-radius: 8px; display: flex; justify-content: center; align-items: center;">
+                            <span style="color: #1a73e8; font-size: 24px;">🚀</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-top: 0; color: #333; font-size: 18px;">Kolay Kullanım</h3>
+                        <p style="color: #666;">Karmaşık yazılımlara gerek yok, sadece metninizi girin ve hazır.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Çağrı Butonu -->
+    <div style="text-align: center; margin: 50px 0 20px; padding: 30px; background-color: #e8f0fe; border-radius: 10px;">
+        <h2 style="color: #1a73e8; margin-bottom: 15px;">Şimdi Başlayın!</h2>
+        <p style="color: #555; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">Yapay zeka destekli CV ve belge oluşturma araçlarımızla profesyonel sonuçlar elde edin.</p>
+        {% if 'user_id' in session %}
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="{{ url_for('create_resume') }}" class="btn" style="background-color: #4CAF50; color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold;">CV Oluştur</a>
+                <a href="{{ url_for('create_document') }}" class="btn" style="background-color: #1a73e8; color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold;">PDF Belge Oluştur</a>
+            </div>
+        {% else %}
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="{{ url_for('register') }}" class="btn" style="background-color: #1a73e8; color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold;">Ücretsiz Kayıt Ol</a>
+                <a href="{{ url_for('login') }}" class="btn" style="background-color: #4CAF50; color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold;">Giriş Yap</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %} 

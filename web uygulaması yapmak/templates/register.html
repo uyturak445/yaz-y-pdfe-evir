@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Kayıt Ol - Getbelge{% endblock %}
+
+{% block page_content %}
+    <div class="card" style="max-width: 500px; margin: 0 auto;">
+        <h2 style="color: #1a73e8; text-align: center; margin-bottom: 30px;">Kayıt Ol</h2>
+        
+        <form method="post" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">E-posta Adresi</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <small class="text-muted">
+                    Şifreniz aşağıdaki gereksinimleri karşılamalıdır:
+                    <ul style="padding-left: 20px; margin-top: 5px;">
+                        <li>En az 10 karakter uzunluğunda</li>
+                        <li>En az bir büyük harf (A-Z)</li>
+                        <li>En az bir küçük harf (a-z)</li>
+                        <li>En az bir rakam (0-9)</li>
+                        <li>En az bir özel karakter (!@#$%^&*(),.?":{}|<>)</li>
+                    </ul>
+                </small>
+            </div>
+            
+            <div class="form-group">
+                <label for="password_confirm">Şifre (Tekrar)</label>
+                <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
+            </div>
+            
+            <button type="submit" class="btn" style="background-color: #1a73e8; color: white; width: 100%; margin-bottom: 15px;">Kayıt Ol</button>
+        </form>
+        
+        <div class="alert alert-info" style="font-size: 0.85em; margin-top: 20px;">
+            <strong>Güvenlik İpuçları:</strong>
+            <ul style="padding-left: 20px; margin-top: 5px; margin-bottom: 5px;">
+                <li>Aynı şifreyi farklı sitelerde kullanmayın</li>
+                <li>Şifrenizi düzenli olarak değiştirin</li>
+                <li>Kişisel bilgilerinizi içeren şifreler kullanmayın</li>
+                <li>Şifrenizi güvenli bir yerde saklayın</li>
+            </ul>
+        </div>
+        
+        <p style="text-align: center; margin-top: 20px;">
+            Zaten hesabınız var mı? <a href="{{ url_for('login') }}" style="color: #1a73e8; text-decoration: none;">Giriş Yap</a>
+        </p>
+    </div>
+{% endblock %} 

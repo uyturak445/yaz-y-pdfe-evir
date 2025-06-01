@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ resume.title }} - CV Yazdır</title>
+    
+    <!-- Dinamik font yükleme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Temel stiller - renk şemasına göre değiştirilecek */
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #6c5ce7;
+            --accent-color: #e8f0fe;
+            --text-color: #333;
+            --background-color: #f5f5f5;
+            --card-color: #fff;
+            --header-bg: linear-gradient(135deg, #1a73e8 0%, #6c5ce7 100%);
+            --heading-border: 2px solid #1a73e8;
+            --font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        /* Renk şemaları */
+        .blue-scheme {
+            --primary-color: #1a73e8;
+            --secondary-color: #6c5ce7;
+            --accent-color: #e8f0fe;
+            --header-bg: linear-gradient(135deg, #1a73e8 0%, #6c5ce7 100%);
+            --heading-border: 2px solid #1a73e8;
+        }
+        
+        .green-scheme {
+            --primary-color: #27ae60;
+            --secondary-color: #2ecc71;
+            --accent-color: #e8f7ed;
+            --header-bg: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            --heading-border: 2px solid #27ae60;
+        }
+        
+        .purple-scheme {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --accent-color: #f0e7f6;
+            --header-bg: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            --heading-border: 2px solid #8e44ad;
+        }
+        
+        .dark-scheme {
+            --primary-color: #34495e;
+            --secondary-color: #2c3e50;
+            --accent-color: #e5e8ed;
+            --text-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --header-bg: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            --heading-border: 2px solid #34495e;
+        }
+        
+        .minimal-scheme {
+            --primary-color: #555;
+            --secondary-color: #777;
+            --accent-color: #f5f5f5;
+            --text-color: #333;
+            --background-color: #fff;
+            --card-color: #fff;
+            --header-bg: #f5f5f5;
+            --heading-border: 1px solid #ddd;
+        }
+        
+        /* Yazı tipleri */
+        .font-segoe {
+            --font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .font-roboto {
+            --font-family: 'Roboto', sans-serif;
+        }
+        
+        .font-opensans {
+            --font-family: 'Open Sans', sans-serif;
+        }
+        
+        .font-montserrat {
+            --font-family: 'Montserrat', sans-serif;
+        }
+        
+        .font-georgia {
+            --font-family: Georgia, serif;
+        }
+        
+        /* Temel stiller */
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        /* Başlık stilleri */
+        .header-standard h1, .header-standard h2, .header-standard h3 {
+            color: var(--primary-color);
+        }
+        
+        .header-bold h1, .header-bold h2, .header-bold h3 {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .header-underlined h1, .header-underlined h2, .header-underlined h3 {
+            border-bottom: var(--heading-border);
+            padding-bottom: 10px;
+        }
+        
+        .header-boxed h1, .header-boxed h2, .header-boxed h3 {
+            background-color: var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .header-gradient h1, .header-gradient h2, .header-gradient h3 {
+            background: var(--header-bg);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-bottom: var(--heading-border);
+        }
+        
+        /* Düzen stilleri */
+        .layout-classic .section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .layout-classic .section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        
+        .layout-modern .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .layout-modern h2 {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            margin-top: -30px;
+            margin-bottom: 20px;
+        }
+        
+        .layout-compact .section {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--card-color);
+        }
+        
+        .layout-compact h2 {
+            font-size: 18px;
+            margin: 5px 0 10px 0;
+        }
+        
+        .layout-timeline .section {
+            position: relative;
+            margin-left: 30px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .layout-timeline .section::before {
+            content: "";
+            position: absolute;
+            left: -30px;
+            top: 15px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            z-index: 1;
+        }
+        
+        .layout-timeline .section::after {
+            content: "";
+            position: absolute;
+            left: -23px;
+            top: 30px;
+            width: 2px;
+            height: calc(100% + 15px);
+            background-color: var(--primary-color);
+            opacity: 0.5;
+        }
+        
+        .layout-creative .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .layout-creative .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            opacity: 0.1;
+            border-radius: 0 0 0 40px;
+        }
+        
+        /* Diğer stiller */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: var(--header-bg);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: white;
+            border-bottom: none;
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            list-style-type: square;
+            color: var(--text-color);
+        }
+        
+        ul li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin: 15px 0 25px;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 10px;
+        }
+        
+        .contact-icon {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        .cv-content {
+            background: var(--card-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .skill-pill {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin: 5px 0;
+        }
+        
+        .no-print {
+            background-color: var(--accent-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .no-print h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .no-print ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-left: 0;
+            text-align: left;
+        }
+        
+        .no-print li {
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .no-print li:before {
+            content: "✓";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 10px 5px;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        /* Yazdırma stilleri */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            
+            .cv-content {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .section {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                background: var(--header-bg) !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section::after, .section::before {
+                background-color: var(--primary-color) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .skill-pill {
+                background-color: var(--accent-color) !important;
+                color: var(--primary-color) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            a {
+                text-decoration: none;
+                color: var(--text-color) !important;
+            }
+            
+            h1, h2, h3, h4 {
+                color: var(--primary-color) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <h3>PDF olarak kaydetmek için:</h3>
+        <ul>
+            <li><strong>Windows:</strong> Yazdırma penceresinde "Microsoft Print to PDF" yazıcısını seçin</li>
+            <li><strong>Mac:</strong> Sol alt köşedeki PDF menüsünden "PDF olarak kaydet" seçeneğini seçin</li>
+            <li><strong>Chrome:</strong> Hedef kısmından "PDF olarak kaydet" seçeneğini seçin</li>
+        </ul>
+        <button onclick="window.print()" class="btn">Yazdır / PDF Olarak Kaydet</button>
+        <a href="{{ url_for('view_resume', resume_id=resume.id) }}" class="btn btn-secondary">Geri Dön</a>
+    </div>
+    
+    <div id="resume-container" class="cv-content">
+        {{ resume.content|safe }}
+    </div>
+    
+    <script>
+        // Sayfa yüklendiğinde içeriği zenginleştir
+        window.onload = function() {
+            // URL parametrelerini al
+            const params = new URLSearchParams(window.location.search);
+            const colorScheme = params.get('color_scheme') || 'blue';
+            const fontStyle = params.get('font_style') || 'segoe';
+            const layoutStyle = params.get('layout_style') || 'classic';
+            const headerStyle = params.get('header_style') || 'standard';
+            
+            // Seçilen stilleri uygula
+            applyStyles(colorScheme, fontStyle, layoutStyle, headerStyle);
+            
+            // İçeriği zenginleştir
+            enhanceContent(layoutStyle);
+        }
+        
+        // Seçilen stilleri uygulama fonksiyonu
+        function applyStyles(colorScheme, fontStyle, layoutStyle, headerStyle) {
+            // Body elementine stil sınıflarını ekle
+            document.body.classList.add(`${colorScheme}-scheme`);
+            document.body.classList.add(`font-${fontStyle}`);
+            document.body.classList.add(`layout-${layoutStyle}`);
+            document.body.classList.add(`header-${headerStyle}`);
+            
+            // Butonlara da stil uygula
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                if (!btn.classList.contains('btn-secondary')) {
+                    btn.style.backgroundColor = 'var(--primary-color)';
+                }
+            });
+        }
+        
+        // CV içeriğini zenginleştiren fonksiyon
+        function enhanceContent(layoutStyle) {
+            // Markdown içeriğini formatlama
+            const content = document.querySelector('#resume-container');
+            
+            // Markdown biçimlendirmesini temizle
+            let htmlContent = content.innerHTML
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+                
+            // Beceri etiketlerini biçimlendir
+            htmlContent = htmlContent.replace(
+                /([a-zA-ZğüşıöçĞÜŞİÖÇ\s]+)(,|\s-\s|;)/g,
+                '<span class="skill-pill">$1</span>$2'
+            );
+            
+            content.innerHTML = htmlContent;
+            
+            // Başlıkları biçimlendir
+            let headingsFound = false;
+            const heading1 = content.querySelector('h1');
+            
+            if (heading1) {
+                // Ana başlığı header içine al
+                const header = document.createElement('div');
+                header.className = 'header';
+                heading1.parentNode.insertBefore(header, heading1);
+                header.appendChild(heading1);
+                headingsFound = true;
+            }
+            
+            // Alt başlıkları biçimlendir
+            const headings = content.querySelectorAll('h2, h3');
+            headings.forEach(heading => {
+                const section = document.createElement('div');
+                section.className = 'section';
+                heading.parentNode.insertBefore(section, heading);
+                
+                // Mevcut başlıktan sonraki elementi bul
+                let nextElement = heading.nextElementSibling;
+                section.appendChild(heading);
+                
+                // Section'a içerik ekle (bir sonraki başlığa kadar)
+                while (nextElement && !['H1', 'H2', 'H3'].includes(nextElement.tagName)) {
+                    const current = nextElement;
+                    nextElement = nextElement.nextElementSibling;
+                    section.appendChild(current);
+                }
+                
+                headingsFound = true;
+            });
+            
+            // Başlık bulunamadıysa, büyük harfli yazıları başlık olarak işaretle
+            if (!headingsFound) {
+                let lines = content.innerText.split('\n');
+                let formattedHtml = '';
+                let inSection = false;
+                
+                for (let i = 0; i < lines.length; i++) {
+                    let line = lines[i].trim();
+                    
+                    if (line.length > 0 && line.length < 50 && line === line.toUpperCase()) {
+                        // Önceki section'ı kapat (eğer varsa)
+                        if (inSection) {
+                            formattedHtml += '</div>';
+                        }
+                        // Yeni section başlat
+                        formattedHtml += `<div class="section"><h2>${line}</h2>`;
+                        inSection = true;
+                    } else if (line.length > 0) {
+                        formattedHtml += `<p>${line}</p>`;
+                    } else {
+                        formattedHtml += '<br>';
+                    }
+                }
+                
+                // Son section'ı kapat
+                if (inSection) {
+                    formattedHtml += '</div>';
+                }
+                
+                // Eğer hiç section oluşturulmadıysa
+                if (!inSection) {
+                    content.innerHTML = `<div class="section">${htmlContent}</div>`;
+                } else {
+                    content.innerHTML = formattedHtml;
+                }
+            }
+        }
+    </script>
+</body>
+</html> 
